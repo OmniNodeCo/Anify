@@ -15,6 +15,8 @@ import {
 import { AnimationProject } from '../types/animation';
 
 interface HeaderProps {
+  appMode: 'character' | 'fx';
+  onChangeAppMode: (mode: 'character' | 'fx') => void;
   project: AnimationProject;
   onUpdateTitle: (title: string) => void;
   onOpenAIGenerator: () => void;
@@ -31,6 +33,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({
+  appMode,
+  onChangeAppMode,
   project,
   onUpdateTitle,
   onOpenAIGenerator,
@@ -47,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="h-14 border-b border-white/10 bg-[#0d0f18]/90 backdrop-blur-md px-4 flex items-center justify-between select-none z-30 shrink-0">
-      {/* Brand & Project Title */}
+      {/* Brand & Mode Switcher */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2 cursor-pointer group" onClick={onOpenGallery}>
           <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-500 via-indigo-500 to-pink-500 flex items-center justify-center shadow-lg shadow-cyan-500/20 group-hover:scale-105 transition-transform">
@@ -58,25 +62,35 @@ export const Header: React.FC<HeaderProps> = ({
               ANIFY
             </span>
             <span className="text-[10px] font-semibold tracking-wider text-cyan-400/80 uppercase ml-1.5 px-1.5 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40">
-              AI STUDIO
+              APP
             </span>
           </div>
         </div>
 
         <div className="h-4 w-[1px] bg-white/10" />
 
-        {/* Project Title Editor */}
-        <div className="flex items-center gap-2">
-          <input
-            type="text"
-            value={project.title}
-            onChange={(e) => onUpdateTitle(e.target.value)}
-            className="bg-transparent hover:bg-white/5 focus:bg-white/10 border border-transparent hover:border-white/10 focus:border-cyan-500/50 rounded px-2.5 py-1 text-sm font-semibold text-slate-200 focus:text-white focus:outline-none transition-all max-w-[220px] md:max-w-[320px] truncate"
-            title="Click to rename project"
-          />
-          <span className="text-[10px] uppercase font-mono px-2 py-0.5 rounded-full bg-slate-800/80 text-slate-400 border border-white/5">
-            {project.engine}
-          </span>
+        {/* Master Mode Switcher (Character Studio vs FX Studio) */}
+        <div className="flex items-center bg-slate-900 border border-white/10 rounded-lg p-0.5 shadow-inner">
+          <button
+            onClick={() => onChangeAppMode('character')}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
+              appMode === 'character'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>🤖 Character App</span>
+          </button>
+          <button
+            onClick={() => onChangeAppMode('fx')}
+            className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-bold transition-all cursor-pointer ${
+              appMode === 'fx'
+                ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-md shadow-cyan-500/25'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>⚡ FX & Shaders</span>
+          </button>
         </div>
       </div>
 

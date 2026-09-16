@@ -18,7 +18,12 @@ import { PRESETS } from './presets';
 import { generateAnimationFromPrompt } from './ai/generator';
 import { processDirectorCommand } from './ai/chatDirector';
 
+import { CharacterStudio } from './character/CharacterStudio';
+
 export function App() {
+  // App Mode ('character' = Character Studio Flagship App, 'fx' = Procedural FX Studio)
+  const [appMode, setAppMode] = useState<'character' | 'fx'>('character');
+
   // Active Project (default to Quantum Black Hole masterpiece)
   const initialPreset = PRESETS[0];
   const [project, setProject] = useState<AnimationProject>(() => ({
@@ -349,6 +354,8 @@ export function App() {
     <div className="flex flex-col h-screen w-screen bg-[#07080f] text-slate-100 overflow-hidden font-sans">
       {/* Top Header */}
       <Header
+        appMode={appMode}
+        onChangeAppMode={setAppMode}
         project={project}
         onUpdateTitle={handleUpdateTitle}
         onOpenAIGenerator={() => setIsAIPromptOpen(true)}
@@ -365,55 +372,61 @@ export function App() {
       />
 
       {/* Main Workspace Body */}
-      <div className="flex-1 flex overflow-hidden relative">
-        {/* Viewport Canvas Stage */}
-        <Viewport
-          project={project}
-          runnerRef={runnerRef}
-          isPlaying={isPlaying}
-          currentTime={currentTime}
-          onTogglePlay={handleTogglePlay}
-          onTimeUpdate={setCurrentTime}
-          aspectRatio={aspectRatio}
-          onChangeAspectRatio={setAspectRatio}
-          onReset={handleReset}
-          onStepFrame={handleStepFrame}
-        />
+      {appMode === 'character' ? (
+        <CharacterStudio onToggleChat={() => setIsChatOpen((prev) => !prev)} />
+      ) : (
+        <>
+          <div className="flex-1 flex overflow-hidden relative">
+            {/* Viewport Canvas Stage */}
+            <Viewport
+              project={project}
+              runnerRef={runnerRef}
+              isPlaying={isPlaying}
+              currentTime={currentTime}
+              onTogglePlay={handleTogglePlay}
+              onTimeUpdate={setCurrentTime}
+              aspectRatio={aspectRatio}
+              onChangeAspectRatio={setAspectRatio}
+              onReset={handleReset}
+              onStepFrame={handleStepFrame}
+            />
 
-        {/* Collapsible Left AI Co-Director Drawer */}
-        <AIChatDrawer
-          isOpen={isChatOpen}
-          onClose={() => setIsChatOpen(false)}
-          messages={chatMessages}
-          onSendMessage={handleSendMessage}
-          isProcessing={isChatProcessing}
-        />
+            {/* Collapsible Left AI Co-Director Drawer */}
+            <AIChatDrawer
+              isOpen={isChatOpen}
+              onClose={() => setIsChatOpen(false)}
+              messages={chatMessages}
+              onSendMessage={handleSendMessage}
+              isProcessing={isChatProcessing}
+            />
 
-        {/* Right Sidebar: Parameter Panel OR Code Editor */}
-        {activeRightTab === 'params' ? (
-          <ParameterPanel
+            {/* Right Sidebar: Parameter Panel OR Code Editor */}
+            {activeRightTab === 'params' ? (
+              <ParameterPanel
+                project={project}
+                onUpdateParam={handleUpdateParam}
+                onUpdatePostProcessing={handleUpdatePostProcessing}
+                onResetParams={handleResetParams}
+              />
+            ) : (
+              <CodeEditor
+                code={project.code}
+                onChangeCode={handleUpdateCode}
+                onRecompile={handleRecompile}
+                onAskAI={handleSendMessage}
+              />
+            )}
+          </div>
+
+          {/* Bottom Timeline Sequencer */}
+          <Timeline
             project={project}
-            onUpdateParam={handleUpdateParam}
-            onUpdatePostProcessing={handleUpdatePostProcessing}
-            onResetParams={handleResetParams}
+            currentTime={currentTime}
+            onSeek={handleSeek}
+            onUpdateDuration={(d) => setProject((prev) => ({ ...prev, duration: d }))}
           />
-        ) : (
-          <CodeEditor
-            code={project.code}
-            onChangeCode={handleUpdateCode}
-            onRecompile={handleRecompile}
-            onAskAI={handleSendMessage}
-          />
-        )}
-      </div>
-
-      {/* Bottom Timeline Sequencer */}
-      <Timeline
-        project={project}
-        currentTime={currentTime}
-        onSeek={handleSeek}
-        onUpdateDuration={(d) => setProject((prev) => ({ ...prev, duration: d }))}
-      />
+        </>
+      )}
 
       {/* Modals */}
       <AIPromptModal

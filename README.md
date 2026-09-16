@@ -1,6 +1,44 @@
-# Anify ⚡ — AI Advanced Animation Studio
+# Anify ⚡ — AI Character Animation Studio & App
 
-Anify is an intelligent, high-performance AI Animation Generation & Studio Suite. It translates natural language prompts into advanced, interactive, multi-layered animations running at silky-smooth 60/120 FPS across Canvas2D and WebGL 3D (Three.js) engines.
+Anify is an interactive **AI Character Animation Studio & Motion Synthesis App**. It features an interactive 3D character arena with real-time motion playback, skeletal bone rigging, kinematic cycles (backflips, walking, running, sprinting, parkour rolls, sword combat), and native Blender compatibility.
+
+---
+
+## 🎮 The Character Animation App
+
+### 🔄 Interactive Action Move-Set (10 Actions)
+- **Backflip (`Space`)**: High-altitude tucked 360° acrobatic backflip with mid-air tuck and heroic superhero landing with ground impact ring.
+- **Walk (`W`)**: Natural forward bipedal gait with counter-arm swings, pelvic pitch, heel-strike, and toe-off.
+- **Run (`R`)**: High-speed athletic running cycle with forward lean, knee drive, and arm pumping.
+- **Sprint (`S`)**: Supersonic dash with high knee lift and chromatic motion blur trails.
+- **High Jump**: Explosive vertical leap with knee tuck and dynamic descent.
+- **Parkour Roll (`F`)**: Forward diving somersault dive-roll recovery.
+- **Katana Slash (`J`)**: 3-hit martial katana combo with glowing arc ribbon trails.
+- **Breakdance**: Dynamic floor windmill and flare spin acrobatics.
+- **Knee Slide**: High-speed ground friction slide throwing up glowing sparks.
+- **Combat Idle (`I`)**: Natural breathing, weight-shifting, and weapon ready stance.
+
+### 🤖 Multi-Model Character Roster
+- **Cyber Ninja (Ren)**: High-agility humanoid with twin glowing plasma katanas, armor plating, and flowing scarf physics.
+- **Titan Mech (Goliath)**: Heavy armored hydraulic bipedal robot with shoulder cannons and shockwave ground impacts.
+- **Cyborg Valkyrie**: Sleek athletic neon humanoid with energy blades.
+- **Vector Puppet (Pixel)**: Stylized 2.5D kinetic puppet runner.
+
+### 🕹️ Real-time Controls & App Features
+- **Gamepad / Touch Controller**: On-screen action cards for instant move triggering.
+- **Keyboard Shortcuts**:
+  - `Space`: Backflip
+  - `W`: Walk
+  - `R`: Run
+  - `S`: Sprint
+  - `J`: Katana Slash
+  - `F`: Parkour Roll
+  - `I`: Combat Idle
+  - `Mouse Drag`: Free 3D Camera Orbit
+- **Camera Presets**: 3D Perspective Orbit, Side 2D Profile (for walk/run cycle analysis), and Frontal View.
+- **Slow-Motion Analyzer**: Toggle between `1.0x` (Normal), `0.5x` (Cinematic Slow-Mo), `0.25x` (Ultra Slow-Mo), and `2.0x` (Fast).
+- **Rigging X-Ray**: Inspect bone wireframes, joint spheres, blade ribbon trails, and ground shadow contacts.
+- **Blender Character Rig Exporter**: 1-click export of the character rig with full bone hierarchy (`Pelvis`, `Spine`, `Head`, `Thigh_L`, `Shin_L`, `Arm_L`, etc.) and keyframed F-Curves ready to render in Cycles or Eevee Next!
 
 ---
 
