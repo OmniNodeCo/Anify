@@ -15,10 +15,16 @@ import { lorenzPreset } from './lorenzAttractor';
 import { matrixRainPreset } from './matrixRain';
 import { origami3DPreset } from './origami3D';
 import { reactionDiffusionPreset } from './reactionDiffusion';
+import { cyberMechPreset } from './cyberMech3D';
+import { ninjaParkourPreset } from './ninjaParkour3D';
+import { puppetRunnerPreset } from './puppetRunner';
 
 export const PRESETS: PresetAnimation[] = [
   blackHolePreset,
+  cyberMechPreset,
   cyberCityPreset,
+  ninjaParkourPreset,
+  puppetRunnerPreset,
   neuralNetworkPreset,
   particleVortexPreset,
   tesseractPreset,
@@ -41,6 +47,7 @@ export function getPresetById(id: string): PresetAnimation | undefined {
 
 export const CATEGORIES = [
   'All',
+  'Character & Rigging',
   'Cosmic & Physics',
   '3D & Shaders',
   'Motion Graphics',

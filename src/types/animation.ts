@@ -122,7 +122,7 @@ export interface PresetAnimation {
   title: string;
   prompt: string;
   description: string;
-  category: 'Cosmic & Physics' | '3D & Shaders' | 'Motion Graphics' | 'Cyber & HUD' | 'Organic & Nature' | 'Math & Fractals';
+  category: 'Cosmic & Physics' | '3D & Shaders' | 'Motion Graphics' | 'Cyber & HUD' | 'Organic & Nature' | 'Math & Fractals' | 'Character & Rigging';
   engine: EngineType;
   badge: string;
   code: string;

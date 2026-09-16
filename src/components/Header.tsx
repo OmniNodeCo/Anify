@@ -95,7 +95,7 @@ export const Header: React.FC<HeaderProps> = ({
           className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-slate-300 hover:text-white text-xs font-medium transition-all cursor-pointer"
         >
           <LayoutGrid className="w-3.5 h-3.5 text-slate-400" />
-          <span>Presets (16)</span>
+          <span>Presets (19)</span>
         </button>
 
         <button

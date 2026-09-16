@@ -27,7 +27,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({
   project,
   getCanvas,
 }) => {
-  const [exportType, setExportType] = useState<'video' | 'gif' | 'png_zip' | 'html' | 'json'>('video');
+  const [exportType, setExportType] = useState<'video' | 'gif' | 'png_zip' | 'html' | 'blender' | 'json'>('video');
   const [durationSec, setDurationSec] = useState<number>(Math.min(project.duration || 6, 8));
   const [fps, setFps] = useState<number>(60);
   const [isExporting, setIsExporting] = useState<boolean>(false);
@@ -74,6 +74,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({
         const html = ExportEngine.generateStandaloneHtml(project);
         ExportEngine.downloadText(html, `${project.title.toLowerCase().replace(/\s+/g, '_')}.html`, 'text/html');
         setProgress({ status: 'completed', progress: 100, message: 'Standalone HTML bundle generated!' });
+      } else if (exportType === 'blender') {
+        const pyScript = ExportEngine.exportBlenderScript(project);
+        ExportEngine.downloadText(pyScript, `anify_${project.title.toLowerCase().replace(/[^a-z0-9_]/g, '_')}.py`, 'text/x-python');
+        setProgress({ status: 'completed', progress: 100, message: 'Blender Python script downloaded! Run in Blender scripting tab.' });
       } else if (exportType === 'json') {
         const json = JSON.stringify(project, null, 2);
         ExportEngine.downloadText(json, `${project.title.toLowerCase().replace(/\s+/g, '_')}.anify.json`, 'application/json');
@@ -179,6 +183,24 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   <div className="text-[10px] text-slate-400">Single file runnable anywhere</div>
                 </div>
               </button>
+
+              <button
+                type="button"
+                onClick={() => setExportType('blender')}
+                className={`p-3 rounded-xl border text-left flex items-start gap-2.5 transition-all cursor-pointer col-span-2 ${
+                  exportType === 'blender'
+                    ? 'bg-orange-950/40 border-orange-500 text-white shadow-lg shadow-orange-950/50'
+                    : 'bg-slate-900/80 border-white/5 text-slate-400 hover:border-white/20'
+                }`}
+              >
+                <div className="w-5 h-5 rounded bg-orange-500/20 text-orange-400 font-bold text-xs flex items-center justify-center border border-orange-500/40 mt-0.5">
+                  B
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-orange-300">Blender Integration Script (.py)</div>
+                  <div className="text-[10px] text-slate-400">Reconstructs armatures, cameras, materials & F-curve keyframes in Blender</div>
+                </div>
+              </button>
             </div>
           </div>
 
@@ -212,6 +234,20 @@ export const ExportModal: React.FC<ExportModalProps> = ({
                   <option value={60}>60 FPS (Smooth)</option>
                 </select>
               </div>
+            </div>
+          )}
+
+          {exportType === 'blender' && (
+            <div className="p-3 bg-orange-950/20 border border-orange-500/30 rounded-xl space-y-1.5 text-xs">
+              <div className="font-semibold text-orange-300 flex items-center gap-1.5">
+                <span>Blender Import Instructions</span>
+              </div>
+              <p className="text-slate-300 text-[11px] leading-relaxed">
+                Generates a Python script tailored for Blender 3.6 / 4.x / 4.2+ (Eevee Next & Cycles). Open Blender, navigate to <strong>Scripting</strong>, open this script and click <strong>Run Script</strong>, or run via CLI:
+              </p>
+              <code className="block bg-black/60 p-2 rounded text-[11px] font-mono text-orange-200 select-all border border-white/5">
+                blender --python anify_{project.title.toLowerCase().replace(/[^a-z0-9_]/g, '_')}.py
+              </code>
             </div>
           )}
 

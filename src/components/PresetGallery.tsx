@@ -46,7 +46,7 @@ export const PresetGallery: React.FC<PresetGalleryProps> = ({
             <h2 className="text-base font-bold text-white tracking-wide flex items-center gap-2">
               <span>ANIMATION GALLERY & SHOWCASE</span>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                16 Masterpieces
+                19 Masterpieces
               </span>
             </h2>
             <p className="text-xs text-slate-400">Explore pre-built advanced procedural and 3D animations</p>

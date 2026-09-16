@@ -37,6 +37,15 @@ export async function generateAnimationFromPrompt(req: GenerationRequest): Promi
   // Generate specialized animation based on prompt semantic analysis
   if (lower.includes('portal') || lower.includes('wormhole') || lower.includes('vortex') || lower.includes('stargate')) {
     return generateCosmicPortal(prompt, style, req.aspectRatio);
+  } else if (lower.includes('mech') || lower.includes('robot') || lower.includes('biped') || lower.includes('walker')) {
+    const p = PRESETS.find(x => x.id === 'cybernetic-mech-walker-3d')!;
+    return createProjectFromPreset(p, prompt);
+  } else if (lower.includes('ninja') || lower.includes('parkour') || lower.includes('acrobatic') || lower.includes('sword') || lower.includes('combat')) {
+    const p = PRESETS.find(x => x.id === 'ninja-acrobatics-combat-3d')!;
+    return createProjectFromPreset(p, prompt);
+  } else if (lower.includes('puppet') || lower.includes('runner') || lower.includes('character') || lower.includes('walk cycle') || lower.includes('run cycle') || lower.includes('skeleton')) {
+    const p = PRESETS.find(x => x.id === 'vector-puppet-character-runner')!;
+    return createProjectFromPreset(p, prompt);
   } else if (lower.includes('fire') || lower.includes('flame') || lower.includes('ember') || lower.includes('magma') || lower.includes('inferno')) {
     return generateVolumetricFire(prompt, style, req.aspectRatio);
   } else if (lower.includes('boid') || lower.includes('flock') || lower.includes('bird') || lower.includes('swarm') || lower.includes('fish')) {

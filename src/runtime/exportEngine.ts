@@ -1,6 +1,7 @@
 import JSZip from 'jszip';
 import { SimpleGifEncoder } from '../utils/gifEncoder';
 import { AnimationProject } from '../types/animation';
+import { generateBlenderPythonScript } from './blenderExporter';
 
 export interface ExportProgress {
   status: 'recording' | 'encoding' | 'zipping' | 'completed' | 'error';
@@ -446,6 +447,13 @@ export class ExportEngine {
   </script>
 </body>
 </html>`;
+  }
+
+  /**
+   * Export Blender Python integration script
+   */
+  public static exportBlenderScript(project: AnimationProject): string {
+    return generateBlenderPythonScript(project);
   }
 
   public static downloadFile(blob: Blob, filename: string) {
