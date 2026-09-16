@@ -1,4 +1,4 @@
-name: Anify App Build & Package
+name: Anify Multi-Platform App Build
 
 on:
   push:
@@ -11,9 +11,28 @@ on:
       - main
 
 jobs:
-  build-app:
-    name: Build & Package Desktop App
-    runs-on: ubuntu-latest
+  build-multi-platform:
+    name: Build Desktop App (${{ matrix.platform }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: Linux
+            artifact_name: anify-linux-app
+            builder_flag: --linux zip dir
+          - os: windows-latest
+            platform: Windows
+            artifact_name: anify-windows-app
+            builder_flag: --win portable zip
+          - os: macos-latest
+            platform: macOS
+            artifact_name: anify-macos-app
+            builder_flag: --mac dmg zip
+
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: false
 
     steps:
       - name: Checkout repository
@@ -28,20 +47,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build UI Application Assets
+      - name: Build Web Application Bundle
         run: npm run build:web
 
-      - name: Package Standalone Desktop App (Linux & Portable)
+      - name: Package Desktop Application (${{ matrix.platform }})
         run: |
-          npx electron-builder --linux zip dir || true
+          npx electron-builder ${{ matrix.builder_flag }} || true
           mkdir -p release/standalone-app
           cp -r dist release/standalone-app/
           cp -r electron release/standalone-app/
           cp package.json release/standalone-app/
+        shell: bash
 
-      - name: Upload Desktop App Artifacts
+      - name: Upload Desktop App Artifact (${{ matrix.platform }})
         uses: actions/upload-artifact@v4
         with:
-          name: anify-desktop-app
+          name: ${{ matrix.artifact_name }}
           path: release/
           retention-days: 14

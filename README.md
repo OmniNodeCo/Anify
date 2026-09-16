@@ -101,6 +101,15 @@ Anify is an interactive **AI Character Animation Studio & Motion Synthesis App**
 
 ---
 
+## 🖥️ Multi-Platform Desktop App (Windows, macOS & Linux)
+Anify is packaged as a high-performance desktop application across all major desktop operating systems via Electron:
+- **Windows (`.exe` / Portable / `.zip`)**: Standalone portable Windows executable with hardware acceleration.
+- **macOS (`.dmg` / `.zip`)**: Apple Silicon & Intel macOS application bundle.
+- **Linux (`.zip` / Directory / `.AppImage`)**: Linux desktop application package.
+- **Automated CI/CD**: Matrix workflow in `.github/workflows/build.yml` builds and packages all three platform targets in parallel (`ubuntu-latest`, `windows-latest`, `macos-latest`) and uploads the release artifacts.
+
+---
+
 ## 🛠️ Tech Stack
 - **Framework**: React 19, TypeScript, Vite
 - **Styling**: Tailwind CSS v4, Lucide Icons

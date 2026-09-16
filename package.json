@@ -9,6 +9,10 @@
     "build": "vite build",
     "build:web": "vite build",
     "build:app": "vite build && electron-builder --linux --dir",
+    "build:app:linux": "vite build && electron-builder --linux zip dir",
+    "build:app:win": "vite build && electron-builder --win nsis portable zip",
+    "build:app:mac": "vite build && electron-builder --mac dmg zip",
+    "build:app:all": "vite build && electron-builder -mwl",
     "package:app": "vite build && electron-builder --linux zip",
     "preview": "vite preview --host 0.0.0.0 --port 3000"
   },
@@ -28,7 +32,24 @@
         "zip",
         "dir"
       ],
-      "category": "Graphics"
+      "category": "Graphics",
+      "artifactName": "${productName}-Linux-${version}-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable",
+        "zip"
+      ],
+      "artifactName": "${productName}-Windows-${version}-${arch}.${ext}"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.graphics-design",
+      "artifactName": "${productName}-Mac-${version}-${arch}.${ext}"
     }
   },
   "repository": {
