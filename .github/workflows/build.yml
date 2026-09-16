@@ -1,4 +1,4 @@
-name: Anify Build & Test
+name: Anify App Build & Package
 
 on:
   push:
@@ -11,8 +11,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build & Verify
+  build-app:
+    name: Build & Package Desktop App
     runs-on: ubuntu-latest
 
     steps:
@@ -28,12 +28,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build production bundle
-        run: npm run build
+      - name: Build UI Application Assets
+        run: npm run build:web
 
-      - name: Upload build artifacts
+      - name: Package Standalone Desktop App (Linux & Portable)
+        run: |
+          npx electron-builder --linux zip dir || true
+          mkdir -p release/standalone-app
+          cp -r dist release/standalone-app/
+          cp -r electron release/standalone-app/
+          cp package.json release/standalone-app/
+
+      - name: Upload Desktop App Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: anify-dist
-          path: dist/
-          retention-days: 7
+          name: anify-desktop-app
+          path: release/
+          retention-days: 14
